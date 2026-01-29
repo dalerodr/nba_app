@@ -27,16 +27,6 @@ library(sever)              # Customise 'Shiny' Disconnected Screens and Error M
 `%notin%` <- Negate(`%in%`)
 
 
-# function ----------------------------------------------------------------
-
-columna_dummy <- function(df, columna) {
-  df %>% 
-    # mutate_at(columna, ~paste(columna, eval(as.symbol(columna)), sep = "_")) %>% 
-    mutate(valor = df$game) %>% 
-    spread(key = columna, value = valor, fill = 0)
-}
-
-
 # FASTER file reading but BIGGER file size
 game_data <- read_feather(paste0(here(), "/data_public/game_data_public.feather"))
 players <- read_feather(paste0(here(), "/data_public/players_public.feather"))

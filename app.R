@@ -1,5 +1,5 @@
 
-source("data_public.R")
+source("data.R")
 
 theme <- bs_theme_update(
     bslib::bs_theme(), secondary = "#648FBE",
@@ -735,6 +735,9 @@ server <- function(input, output, session){
         
         reactable(data, 
                   groupBy = "namePlayer",
+                  defaultExpanded = TRUE,
+                  defaultSorted = "games",
+                  defaultSortOrder = "desc",
                   columns = list(
                     namePlayer = colDef(show = TRUE, maxWidth = 175),
                     Player = colDef(show = FALSE),
@@ -745,22 +748,21 @@ server <- function(input, output, session){
                     games = colDef(aggregate = "sum",
                                    maxWidth = 80),
                     namePlayer = colDef(show = TRUE),
-                    "% wins"   = colDef(aggregate = "mean",
-                                        format = colFormat(percent = TRUE, digits = 2),
+                    "% wins"   = colDef(format = colFormat(percent = TRUE, digits = 2),
                                         align = "center",
                                         cell = color_tiles(data,
                                                            colors = c("brown1", "chocolate1", "chartreuse2"),
                                                            number_fmt = scales::percent),
                                         minWidth = 75,
                                         maxWidth = 100),
-                    fgm = colDef(aggregate = "mean", format = colFormat(digits = 2), maxWidth = 60),
-                    fga = colDef(aggregate = "mean", format = colFormat(digits = 2), maxWidth = 60),
-                    pts = colDef(aggregate = "mean", format = colFormat(digits = 2), maxWidth = 60),
-                    ast = colDef(aggregate = "mean", format = colFormat(digits = 2), maxWidth = 60),
-                    treb = colDef(aggregate = "mean", format = colFormat(digits = 2), maxWidth = 60),
-                    blk = colDef(aggregate = "mean", format = colFormat(digits = 2), maxWidth = 60),
-                    tov = colDef(aggregate = "mean", format = colFormat(digits = 2), maxWidth = 60),
-                    plusminus = colDef(aggregate = "mean", format = colFormat(digits = 2), maxWidth = 100)))
+                    fgm = colDef(format = colFormat(digits = 2), maxWidth = 60),
+                    fga = colDef(format = colFormat(digits = 2), maxWidth = 60),
+                    pts = colDef(format = colFormat(digits = 2), maxWidth = 60),
+                    ast = colDef(format = colFormat(digits = 2), maxWidth = 60),
+                    treb = colDef(format = colFormat(digits = 2), maxWidth = 60),
+                    blk = colDef(format = colFormat(digits = 2), maxWidth = 60),
+                    tov = colDef(format = colFormat(digits = 2), maxWidth = 60),
+                    plusminus = colDef(format = colFormat(digits = 2), maxWidth = 100)))
       })
     })
     
@@ -814,6 +816,7 @@ server <- function(input, output, session){
           relocate(Team, .after = Player)
         
         reactable(data, columns = list(
+          nameTeam = colDef(show = FALSE),
           namePlayer = colDef(show = TRUE, maxWidth = 150),
           Player = colDef(cell = embed_img(data, height = "60", width = "80"),
                           maxWidth = 125),
@@ -890,6 +893,7 @@ server <- function(input, output, session){
           relocate(Team, .after = Player)
         
         reactable(data, columns = list(
+          nameTeam = colDef(show = FALSE),
           namePlayer = colDef(show = TRUE, maxWidth = 150),
           Player = colDef(cell = embed_img(data, height = "60", width = "80"),
                           maxWidth = 125),
